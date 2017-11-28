@@ -1,0 +1,541 @@
+/*** Reset CSS Load ***/
+html { height:100%; width:100%; }
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding:0;
+}
+table, caption, tbody, tfoot, thead {
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1.3;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table { border-collapse: collapse; border-spacing: 0; table-layout: fixed;}
+
+ol,ul {list-style: none;}
+a {outline: 0;outline: none; color: #3b3b3b; text-decoration: none;}
+a:hover {text-decoration: none;}
+
+.f-left {float: left}
+.f-right {float: right}
+
+.clearfix:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+p {	margin: 0 0 14px; line-height: 1.3}
+
+/*-----------------------------------------------
+            COMMON LAYOUT
+------------------------------------------------*/
+
+body {
+    color: #3b3b3b;
+    font-size: 14px;
+    font-weight: normal;
+    width: 100%;
+    height: 100%;
+    background: url(../images/background.png) no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    padding: 2% 8%;
+    box-sizing: border-box;
+}
+
+/*-----------------------------------------------
+            COMMON STYLES
+------------------------------------------------*/
+
+.outer-wrapper {
+    overflow: hidden;
+    background: #ffffff;
+    min-height: 100%;
+    padding: 40px 20px;
+    max-width: 1360px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.inner-wrapper {
+    flex:1 0 auto;
+}
+
+.main-menu-btn {
+    width: 50px;
+    height: 50px;
+    color: white;
+    background: rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+    font-size: 35px;
+    text-align: center;
+    float: right;
+    box-sizing: border-box;
+    line-height: 50px;
+    border-radius: 5px;
+    border: 2px solid gray;
+    display: none;
+}
+
+.main-menu-btn .line {
+    width: 34px;
+    height: 3px;
+    background: #000000;
+    margin: 6px auto;
+    display: block;
+}
+
+img {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+}
+
+li.channel-button {
+    background: #000000;
+    color: #ffffff;
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+    width: 22%;
+    border: 1px solid #ffffff;
+}
+
+.choose-button-container {
+    margin-bottom: 25px;
+}
+
+.choose-button {
+    min-width: 230px;
+    padding: 10px;
+    color: #000000;
+    background: rgba(0, 0, 0, 0.2);;
+    font-size: 24px;
+    display: inline-block;
+    margin: 15px;
+    text-align: center;
+    line-height: 0.8;
+    float: right;
+    text-transform: uppercase;
+    font-weight: bold;
+    border:1px solid black;
+    box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.5);
+    opacity: 1;
+    transition: all 0.5s ease-out;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+h2 {
+    float: left;
+    font-size: 30px;
+    line-height: 1;
+    border-bottom: 3px solid red;
+    padding: 10px;
+    max-width: 45%;
+}
+
+.spinner {
+    margin: 100px auto;
+    width: 50px;
+    height: 40px;
+    text-align: center;
+    font-size: 10px;
+}
+
+.spinner > div {
+    background-color: #333;
+    height: 100%;
+    width: 6px;
+    display: inline-block;
+    margin: 1px;
+
+    -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+    animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+    -webkit-animation-delay: -1.1s;
+    animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+}
+
+.spinner .rect4 {
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+    -webkit-animation-delay: -0.8s;
+    animation-delay: -0.8s;
+}
+
+@-webkit-keyframes sk-stretchdelay {
+    0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
+    20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes sk-stretchdelay {
+    0%, 40%, 100% {
+        transform: scaleY(0.4);
+        -webkit-transform: scaleY(0.4);
+    }  20% {
+           transform: scaleY(1.0);
+           -webkit-transform: scaleY(1.0);
+       }
+}
+
+/*-----------------------------------------------
+            HEADER
+------------------------------------------------*/
+
+.header {
+    height: 150px;
+    padding: 0 22px 20px;
+}
+
+.logo-wrapper {
+    float: left;
+    width: 40%;
+}
+
+.logo-wrapper a {
+    display: inline-block;
+}
+
+.logo-wrapper a span {
+    font-size: 40px;
+    line-height: 0.9;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.logo-wrapper a span:first-child {
+    display: block;
+    font-size: 32px;
+}
+
+.logo-wrapper a span.color-styling {
+    color: #ff0000;
+}
+
+.social-net-icons {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.social-net-icons .social-icon a {
+    display: inline-block;
+    width: 30px;
+    height: 25px;
+    margin: 0 10px;
+}
+
+.social-icon.twitter a {
+    background: url(../images/twitter.png) no-repeat 0 0;
+}
+
+.social-icon.facebook a {
+    background: url(../images/facebook.png) no-repeat 0 0;
+}
+
+.social-icon.feed a {
+    background: url(../images/feed.png) no-repeat 0 0;
+}
+
+/*-----------------------------------------------
+            NAVIGATION
+------------------------------------------------*/
+
+.navigation ul {
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    padding: 0;
+}
+
+.navigation ul li.channel-button {
+    width: 23.5%;
+    border: 1px solid #ffffff;
+    background: #353535;
+    color: #ffffff;
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    margin: 1% 2% 1% 0;
+    box-sizing: border-box;
+}
+
+.navigation ul li.channel-button:nth-child(4n) {
+    margin-right: 0;
+}
+
+.navigation ul li.channel-button.checked {
+    background: #3a3a7d;
+    color: white;
+}
+
+.navigation ul li:hover {
+    color: #000000;
+    background: #b1b1b1;
+    transition: all 0.3s ease-out;
+}
+
+#section span.error-msg,
+.navigation ul li.error-msg {
+    display: block;
+    font-size: 35px;
+    color: grey;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 50px auto;
+}
+
+#section span.error-msg:hover,
+.navigation ul li.error-msg:hover {
+    color: grey;
+    background: transparent;
+}
+
+    /*-----------------------------------------------
+                FOOTER
+    ------------------------------------------------*/
+
+.footer {
+    text-align: center;
+    padding: 35px 20px 0;
+    flex: 0 0 auto;
+    border-top: 2px dotted #000000;
+}
+
+.footer p {
+    text-align: center;
+    font-size: 24px;
+}
+
+.footer p a {
+    color: red;
+    text-decoration: underline;
+}
+
+.footer p a:hover {
+    text-decoration: none;
+}
+
+/*-----------------------------------------------
+            DATA SECTION
+------------------------------------------------*/
+#section {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.data-box {
+    width: 22%;
+    display: flex;
+    flex-direction: column;
+    margin: 2%;
+}
+
+.data-box:nth-child(4n) {
+    margin-right: 0;
+}
+
+.data-box:nth-child(4n + 1) {
+    margin-left: 0;
+}
+
+.data-box .title {
+    padding: 15px 0;
+}
+
+.data-box .title a {
+    color:  red;
+    font-size: 30px;
+    line-height: 1;
+}
+
+.data-box .image-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 285px;
+}
+
+.image-box img {
+    transition: all 1s ease-out;
+}
+
+.image-box img:hover {
+    transform: scale(1.1,1.1);
+}
+
+.image-box a {
+    display: block;
+    overflow: hidden;
+}
+
+.data-box .source {
+    font-size: 23px;
+    color: grey;
+    margin: 10px 0;
+}
+
+.data-box .description {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.data-box .date {
+    color: grey;
+    text-align: right;
+}
+
+.data-box .description-container {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+}
+
+/*-----------------------------------------------
+            MEDIA QUARIES  1024PX
+------------- -----------------------------------*/
+
+@media screen and (max-width: 1024px) {
+    .data-box {
+        width: 48%;
+        margin: 0 0 30px;
+    }
+
+    .data-box:nth-child(2n+1) {
+        margin-right: 4%;
+    }
+
+    .navigation ul li.channel-button {
+        width: 49%;
+    }
+
+    .navigation ul li.channel-button:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .main-menu-btn {
+        display: block;
+    }
+
+    .logo-wrapper {
+        width: 70%;
+    }
+
+    .navigation ul li:hover {
+        background: #000000;
+        color: #ffffff;
+    }
+}
+
+/*-----------------------------------------------
+            MEDIA QUARIES  640PX
+------------- -----------------------------------*/
+
+@media screen and (max-width: 640px) {
+    .outer-wrapper {
+        padding-top: 25px;
+    }
+
+    .logo-wrapper a span {
+        font-size: 35px;
+    }
+
+    .header {
+        padding: 0;
+    }
+
+    .navigation ul {
+        display: block;
+        background: transparent;
+    }
+
+    .main-menu ul li.channel-button {
+        display: block;
+        width: 100%;
+        border: none;
+        margin: 0 0 15px;
+    }
+
+    .social-net-icons {
+        text-align: center;
+    }
+
+    #section {
+        display: block;
+    }
+
+    .data-box {
+        width: 100%;
+        margin: 0;
+    }
+
+    h2 {
+        float: none;
+        width: 100%;
+        max-width: 100%;
+        padding: 10px 0;
+    }
+
+    .choose-button {
+        min-width: 100%;
+        margin: 15px 0;
+        padding: 10px 0;
+    }
+
+    .footer p {
+        font-size: 20px;
+    }
+}
