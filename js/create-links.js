@@ -8,8 +8,8 @@ let navList = document.getElementById('buttons-list'),
 
 
 class NewsReporter {
-    getArticles ({channel}) {
-        const url = `${baseUrl}${keySource}${channel}${apiKey}`;
+    getArticles ({channel}) { // Эта функция не имеет отношения к нашему контейнеру. В идеале она должна лежать отдельно вне этого класса
+        const url = `${baseUrl}${keySource}${channel}${apiKey}`; // Можно сделать функцию, где весь урл есть и мы просто в нужное место засовываем название канала, то есть есть строка-шаблон, где есть 1 ${channel}
         const promise = fetch(url);
         return promise.then((response) => response.json())
             .catch(error => {
@@ -21,7 +21,7 @@ class NewsReporter {
         let resultMarkupSources = '';
 
         newsSources.forEach(newsSource => {
-            resultMarkupSources += '<li id="' + newsSource + '" class="channel-button">' + newsSource.split('-').join(' ').toUpperCase() + '</li>'
+            resultMarkupSources += '<li id="' + newsSource + '" class="channel-button">' + newsSource.split('-').join(' ').toUpperCase() + '</li>' // Это может быть шаблонная строка. С точки зрения оптимизации операция конкатенации строк очень энергозатратная, ее лучше не использовать. Можно добавлять всё в массив и потом делать join либо сразу использовать шаблоны. Здесь это логично
         });
 
         navList.insertAdjacentHTML('beforeend' , resultMarkupSources);
@@ -33,7 +33,7 @@ class NewsReporter {
                 let chosenButtons = document.getElementsByClassName('channel-button'),
                     chosenButtonsArray = Array.prototype.slice.call(chosenButtons);
 
-                for (let i = 0; i < chosenButtonsArray.length; i++ ) {
+                for (let i = 0; i < chosenButtonsArray.length; i++ ) { ///  Здесь можно использовать forEach
                     chosenButtonsArray[i].classList.remove('checked');
                 }
                 element.classList.add('checked');
@@ -41,24 +41,24 @@ class NewsReporter {
 
             let obj = {
                 id: element.id
-            };
+            }; // Зачем надо создавать этот объект?
 
-            const {id} = obj;
+            const {id} = obj; 
 
-            this.getArticles({channel: id})
+            this.getArticles({channel: id}) // Плохо выбирать создавать класс с id, как соурс код, потому что нам не нужны эти id на элементах и если потом поменяется суорс код, то тебе придется менять в куче мест + заденет стили. Надо постараться сделать так, чтобы это было собрано в одном месте
                 .then(({articles}) => {
                     this.renderArticles({ articles });
                 });
 
             const showLoading = (container) => {
-                const spinnerMarkup = '<div class="spinner">' +
+                const spinnerMarkup = '<div class="spinner">' + // Это может быть шаблон-строка, ане сумма строк
                     '<div class="rect1"></div>' +
                     '<div class="rect2"></div>' +
                     '<div class="rect3"></div>' +
                     '<div class="rect4"></div>' +
                     '<div class="rect5"></div>' + '</div>';
 
-                container.insertAdjacentHTML('beforeend' , `${spinnerMarkup}`);
+                container.insertAdjacentHTML('beforeend' , `${spinnerMarkup}`); // А вот здесь наоборот шаблон-строка не нужна)
             };
 
             showLoading(section);
@@ -68,7 +68,7 @@ class NewsReporter {
 
     renderArticles({ articles }) {
         const getNewsDate = (_date) => {
-            let options = {
+            let options = { //options у тебя не изменяются, а значит могут быть const
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
@@ -81,7 +81,7 @@ class NewsReporter {
 
         let resultMarkupArticles = '';
 
-        for (let i = 0; i < articles.length; i++) {
+        for (let i = 0; i < articles.length; i++) { // Здесь лучше всего использовать reduce функцию для массива
             let {publishedAt, author, description, source: {id, name}, title, url, urlToImage} = articles[i];
 
             resultMarkupArticles += '<div class="data-box clearfix">' +
