@@ -10,7 +10,7 @@ let navList = document.getElementById('buttons-list'),
 class NewsReporter {
     getArticles ({channel}) {
         const url = `${baseUrl}${keySource}${channel}${apiKey}`;
-        let promise = fetch(url);
+        const promise = fetch(url);
         return promise.then((response) => response.json())
             .catch(error => {
                 console.log(error);
