@@ -1,21 +1,21 @@
 const baseUrl= 'https://newsapi.org/v2/top-headlines?',
-      apiKey = '&apiKey=83b6d448f18244e79fa4e8619b3edf03',
-      newsSources = ['cnn', 'mtv-news', 'google-news', 'time'],
-      keySource = 'sources=';
+    apiKey = '&apiKey=83b6d448f18244e79fa4e8619b3edf03',
+    newsSources = ['cnn', 'mtv-news', 'google-news', 'time'],
+    keySource = 'sources=';
 
 let navList = document.getElementById('buttons-list'),
     section = document.getElementById('section');
 
 
 class NewsReporter {
-     getArticles ({channel}) {
-         const url = `${baseUrl}${keySource}${channel}${apiKey}`;
-         let promise = fetch(url);
-         return promise.then((response) => response.json())
-             .catch(error => {
-             console.log(error);
-         });
-     }
+    getArticles ({channel}) {
+        const url = `${baseUrl}${keySource}${channel}${apiKey}`;
+        let promise = fetch(url);
+        return promise.then((response) => response.json())
+            .catch(error => {
+                console.log(error);
+            });
+    }
 
     renderSources() {
         let resultMarkupSources = '';
@@ -25,10 +25,7 @@ class NewsReporter {
         });
 
         navList.insertAdjacentHTML('beforeend' , resultMarkupSources);
-        navList.addEventListener('click',handler);
-
-        var self = this;
-        function handler(e){
+        navList.addEventListener('click',(e) => {
             section.innerHTML = '';
             e.preventDefault();
             let element = e.target;
@@ -48,46 +45,64 @@ class NewsReporter {
 
             const {id} = e.target;
 
-            self.getArticles({channel: id})
+            this.getArticles({channel: id})
                 .then(({articles}) => {
-                    self.renderArticles({ articles });
+                    this.renderArticles({ articles });
                 });
 
+            const showLoading = (container) => {
+                const spinnerMarkup = '<div class="spinner">' +
+                    '<div class="rect1"></div>' +
+                    '<div class="rect2"></div>' +
+                    '<div class="rect3"></div>' +
+                    '<div class="rect4"></div>' +
+                    '<div class="rect5"></div>' + '</div>';
 
-        }
+                container.insertAdjacentHTML('beforeend' , `${spinnerMarkup}`);
+            };
+
+            showLoading(section);
+
+        });
     }
 
-     renderArticles({ articles }) {
-         const getNewsDate = (_date) => {
-             let options = {
-                 year: 'numeric',
-                 month: 'long',
-                 day: 'numeric',
-                 weekday: 'long',
-                 hour: 'numeric',
-                 minute: 'numeric'
-             };
-             return new Date(_date).toLocaleString("en", options);
-         };
+    renderArticles({ articles }) {
+        const getNewsDate = (_date) => {
+            let options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long',
+                hour: 'numeric',
+                minute: 'numeric'
+            };
+            return new Date(_date).toLocaleString("en", options);
+        };
 
-         let resultMarkupArticles = '';
+        let resultMarkupArticles = '';
 
+        for (let i = 0; i < articles.length; i++) {
+            let {publishedAt, author, description, source: {id, name}, title, url, urlToImage} = articles[i];
 
-         for (let i = 0; i < articles.length; i++) {
-             let {publishedAt, author, description, source: {id, name}, title, url, urlToImage} = articles[i];
+            resultMarkupArticles += '<div class="data-box clearfix">' +
+                '<div class="image-box">' + '<a target="_blank" href=' + url + '>' + '<img src=' + urlToImage + '>' + '</a>' + '</div>' +
+                '<div class="description-container">' +
+                '<div class="source">' + name + '</div>' +
+                '<div class="title">' + '<a target="_blank" href=' + url + '>' + title + '</a>' + '</div>' +
+                '<div class="description">' + description + '</div>' + '</div>' +
+                '<div class="date">' + getNewsDate(publishedAt) + '</div>' +
+                '</div>';
+        }
 
-             resultMarkupArticles += '<div class="data-box clearfix">' +
-                 '<div class="image-box">' + '<a target="_blank" href=' + url + '>' + '<img src=' + urlToImage + '>' + '</a>' + '</div>' +
-                 '<div class="description-container">' +
-                 '<div class="source">' + name + '</div>' +
-                 '<div class="title">' + '<a target="_blank" href=' + url + '>' + title + '</a>' + '</div>' +
-                 '<div class="description">' + description + '</div>' + '</div>' +
-                 '<div class="date">' + getNewsDate(publishedAt) + '</div>' +
-                 '</div>';
-         }
+        const hideLoading = (container) => {
+            container.innerHTML = '';
+        };
 
-         section.insertAdjacentHTML('beforeend', resultMarkupArticles);
-     }
+        hideLoading(section);
+
+        section.insertAdjacentHTML('beforeend', resultMarkupArticles);
+
+    }
 }
 
 
