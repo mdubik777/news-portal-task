@@ -43,7 +43,7 @@ class NewsReporter {
                 id: element.id
             };
 
-            const {id} = e.target;
+            const {id} = obj;
 
             this.getArticles({channel: id})
                 .then(({articles}) => {
