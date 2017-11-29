@@ -142,29 +142,6 @@ li.channel-button {
     margin-bottom: 25px;
 }
 
-.choose-button {
-    min-width: 230px;
-    padding: 10px;
-    color: #000000;
-    background: rgba(0, 0, 0, 0.2);;
-    font-size: 24px;
-    display: inline-block;
-    margin: 15px;
-    text-align: center;
-    line-height: 0.8;
-    float: right;
-    text-transform: uppercase;
-    font-weight: bold;
-    border:1px solid black;
-    box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.5);
-    opacity: 1;
-    transition: all 0.5s ease-out;
-}
-
-.hidden {
-    opacity: 0;
-}
-
 h2 {
     float: left;
     font-size: 30px;
@@ -526,12 +503,6 @@ h2 {
         float: none;
         width: 100%;
         max-width: 100%;
-        padding: 10px 0;
-    }
-
-    .choose-button {
-        min-width: 100%;
-        margin: 15px 0;
         padding: 10px 0;
     }
 
