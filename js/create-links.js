@@ -12,7 +12,7 @@ const getRequestData = (_url)=> {
         .catch(error => {
             console.log(error);
         });
-    };
+};
 
 
 class NewsReporter {
@@ -60,13 +60,13 @@ class NewsReporter {
         let markupsButton = articles .reduce((prevVal, elem) => {
             let {publishedAt, description, source: {id, name}, title, url, urlToImage} = elem;
             return  prevVal + '<div class="data-box clearfix">' +
-                    '<div class="image-box">' + `<a target="_blank" href= ${url} >` + `<img src=${urlToImage}>` + '</a>' + '</div>' +
-                    '<div class="description-container">' +
-                    `<div class="source"> ${name} </div>` +
-                    '<div class="title">' + `<a target="_blank" href= ${url} > ${title} </a>` + '</div>' +
-                    `<div class="description"> ${title} </div>` + '</div>' +
-                    '<div class="date">' + getNewsDate(publishedAt) + '</div>' +
-                    '</div>';
+                '<div class="image-box">' + `<a target="_blank" href= ${url} >` + `<img src=${urlToImage}>` + '</a>' + '</div>' +
+                '<div class="description-container">' +
+                `<div class="source"> ${name} </div>` +
+                '<div class="title">' + `<a target="_blank" href= ${url} > ${title} </a>` + '</div>' +
+                `<div class="description"> ${title} </div>` + '</div>' +
+                '<div class="date">' + getNewsDate(publishedAt) + '</div>' +
+                '</div>';
         }, '');
 
 
