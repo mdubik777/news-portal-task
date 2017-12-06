@@ -79,6 +79,8 @@ class NewsReporter {
     onClickHandler(e, channelId){
         let element = e.target;
 
+        console.log(element);
+
         if(element.classList.contains('checked')){
             return false;
         }
@@ -105,6 +107,8 @@ class NewsReporter {
         this.constructor.showLoading(section);
     }
 }
+
+console.log('hello!!!!');
 
 let newsReporter = new NewsReporter();
 

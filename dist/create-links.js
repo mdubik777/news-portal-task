@@ -18,9 +18,7 @@ var getRequestData = function getRequestData(_url) {
     var promise = fetch(_url);
     return promise.then(function (response) {
         return response.json();
-    }).catch(function (error) {
-        console.log(error);
-    });
+    }).catch(function (error) {});
 };
 
 var NewsReporter = function () {
@@ -106,7 +104,6 @@ var NewsReporter = function () {
             getRequestData(buildUrl(baseUrl, channelId, apiKey)).then(function (_ref2) {
                 var articles = _ref2.articles;
 
-                console.log({ articles: articles });
                 _this2.renderArticles({ articles: articles });
             });
 
