@@ -1,0 +1,10 @@
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "ie": 10
+      }
+    }]
+  ],
+  "plugins": ["./plugins/babel-plugin.js"]
+}
