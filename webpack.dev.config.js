@@ -79,6 +79,10 @@ module.exports = {
                 }]
             },
             {
+                test: /\.json$/,
+                loader: 'json-loader!./loaders/loader-remove-number-attribute'
+            },
+            {
                 test: /\.(png|jpg|gif)$/,
                 use: [
                     {

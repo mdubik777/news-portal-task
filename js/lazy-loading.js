@@ -1,4 +1,5 @@
 import './../css/common.css';
+import './../data/data.json';
 
 let loadButton = document.getElementById('button-load');
 
