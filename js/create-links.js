@@ -1,38 +1,20 @@
+import './../css/styles.less';
+import getRequestData from "./service";
+import utils from "./helper";
+
+
 const baseUrl= 'https://newsapi.org/v2/top-headlines?sources=',
     apiKey = '&apiKey=83b6d448f18244e79fa4e8619b3edf03',
     newsSources = ['cnn', 'mtv-news', 'google-news', 'time'];
 
 let navList = document.getElementById('buttons-list'),
     section = document.getElementById('section'),
-    chosenButtons;
+    chosenButtons,
+    lazyBtnContainer = document.getElementById('lazy-button-container');
 
-const getRequestData = (_url)=> {
-    let promise = fetch(_url);
-    return promise.then((response) => response.json())
-        .catch(error => {
-            console.log(error);
-        });
-};
-
-
-class NewsReporter {
-    static showLoading(container){
-        const spinnerMarkup = `<div class="spinner">
-            <div class="rect1"></div>
-            <div class="rect2"></div>
-            <div class="rect3"></div>
-            <div class="rect4"></div>
-            <div class="rect5"></div></div>`;
-
-        container.insertAdjacentHTML('beforeend' , spinnerMarkup);
-    }
-
-    static  hideLoading(container){
-        container.innerHTML = '';
-    }
-
-
+export default class NewsReporter {
     renderSources() {
+        utils.cleanButtonContainer(lazyBtnContainer);
         newsSources.forEach(newsSource => {
             const li = document.createElement('li');
             li.className = 'channel-button';
@@ -70,10 +52,9 @@ class NewsReporter {
         }, '');
 
 
-        this.constructor.hideLoading(section);
+        utils.hideLoading(section);
 
         section.insertAdjacentHTML('beforeend', markupsButton);
-
     }
 
     onClickHandler(e, channelId){
@@ -104,12 +85,13 @@ class NewsReporter {
                 this.renderArticles({ articles });
             });
 
-        this.constructor.showLoading(section);
+        utils.showLoading(section);
     }
 }
 
-console.log('hello!!!!');
+// let newsReporter = new NewsReporter();
 
-let newsReporter = new NewsReporter();
+// newsReporter.renderSources();
 
-newsReporter.renderSources();
+// export default newsReporter;
+// export default class newsReporter
