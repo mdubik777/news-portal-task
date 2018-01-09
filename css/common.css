@@ -127,6 +127,10 @@ img {
     height: auto;
 }
 
+#buttons-list {
+    display: flex;
+}
+
 li.channel-button {
     background: #000000;
     color: #ffffff;
@@ -134,21 +138,24 @@ li.channel-button {
     font-size: 24px;
     font-weight: bold;
     line-height: 1;
-    width: 22%;
+    width: 23.5%;
     border: 1px solid #ffffff;
+    cursor: pointer;
 }
 
 .choose-button-container {
     margin-bottom: 25px;
 }
 
-h2 {
-    float: left;
-    font-size: 30px;
+.block-wrapper {
+    display: inline-block;
+    border-bottom: 5px solid red;
+}
+
+.block-wrapper h2 {
+    font-size: 40px;
     line-height: 1;
-    border-bottom: 3px solid red;
     padding: 10px;
-    max-width: 45%;
 }
 
 .spinner {
