@@ -3,14 +3,6 @@ class Factory {
         let element;
 
        switch(type) {
-           // case 'showLoading':
-           //     element = new ShowLoading(container);
-           //     break;
-           //
-           // case 'cleanContainer':
-           //     element = new CleanContainer(container);
-           //     break;
-
            case 'createChannelBtn':
                element = new CreateChannelBtn(container, source);
                break;
@@ -23,44 +15,20 @@ class Factory {
         return element;
     }
 }
-//
-// class ShowLoading {
-//     constructor (container) {
-//         this.spinnerMarkup = `<div class="spinner">
-//         <div class="rect1"></div>
-//         <div class="rect2"></div>
-//         <div class="rect3"></div>
-//         <div class="rect4"></div>
-//         <div class="rect5"></div></div>`;
-//
-//         container.insertAdjacentHTML('beforeend' , this.spinnerMarkup);
-//     }
-// }
-//
-// class CleanContainer {
-//     constructor (container) {
-//         // this.clean = function (container) {
-//             container.innerHTML = '';
-//         // }
-//     }
-// }
 
 class CreateChannelBtn {
     constructor (container, source) {
-        // this.create = function (container, source) {
-            const li = document.createElement('li');
-            li.className = 'channel-button';
-            li.textContent = source.split('-').join(' ').toUpperCase();
-            container.appendChild(li);
+        this.li = document.createElement('li');
+        this.li.className = 'channel-button';
+        this.li.textContent = source.split('-').join(' ').toUpperCase();
+        container.appendChild(this.li);
 
-            return li;
-        // }
+        return this.li;
     }
 }
 
 class CreateArticle {
     constructor (container, article) {
-        // this.create = function (container, article) {
 
             const getNewsDate = (_date) => {
                 const options = {
@@ -121,7 +89,6 @@ class CreateArticle {
             container.appendChild(articleContainer);
         }
 
-    // }
 }
 
 export default Factory;
