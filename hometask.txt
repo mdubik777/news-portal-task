@@ -1,0 +1,481 @@
+3.1 db.restaurants.find({'borough' : 'Queens', 'cuisine' : 'Chinese'}).count()
+Result: 728
+
+3.2 db.restaurants.find({},{restaurant_id:1, _id:0}).sort({'grades.score': -1}).limit(1)
+Result:
+{ "restaurant_id" : "40372466" }
+
+3.3 db.restaurants.updateMany({'borough' : 'Manhattan'}, {$push: {grades : { grade: "A", score: 7, date: ISODate()}}})
+Result:
+{ "acknowledged" : true, "matchedCount" : 10259, "modifiedCount" : 10259 }
+
+3.4 db.restaurants.find({'grades.8.score' : {$lt : 7}}, {name:1, _id:0})
+Result:
+{ "name" : "Silver Krust West Indian Restaurant" }
+{ "name" : "Pure Food" }
+
+3.5 db.restaurants.find({$and:[{'cuisine' : 'Seafood'},{grades: {$elemMatch: {grade: "B", date: {$gte : ISODate("2014-02-01T00:00:00Z"), $lte : ISODate("2014-03-01T00:00:00Z")}}}}]}, {borough:1, _id:1})
+Result:
+{ "_id" : ObjectId("5a5759ae4e35d1925ff54fa4"), "borough" : "Bronx" }
+{ "_id" : ObjectId("5a5759ae4e35d1925ff5521f"), "borough" : "Manhattan" }
+
+
+4.1 db.restaurants.createIndex({'name' : 1})
+
+> db.restaurants.find({ name: "Glorious Food" }).explain()
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "frontcamp.restaurants",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "name" : {
+                                "$eq" : "Glorious Food"
+                        }
+                },
+                "winningPlan" : {
+                        "stage" : "FETCH",
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "keyPattern" : {
+                                        "name" : 1
+                                },
+                                "indexName" : "name_1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "name" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "name" : [
+                                                "[\"Glorious Food\", \"Glorious Food\"]"
+                                        ]
+                                }
+                        }
+                },
+                "rejectedPlans" : [ ]
+        },
+        "serverInfo" : {
+                "host" : "DESKTOP-J7U4URB",
+                "port" : 27017,
+                "version" : "3.6.2",
+                "gitVersion" : "489d177dbd0f0420a8ca04d39fd78d0a2c539420"
+        },
+        "ok" : 1
+}
+
+4.2 db.restaurants.dropIndex('name_1')
+
+4.3 db.restaurants.createIndex({restaurant_id: 1, borough: 1})
+
+db.restaurants.find({restaurant_id: "41098650"}, {_id: 0, borough: 1}).explain("executionStats");
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "frontcamp.restaurants",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "restaurant_id" : {
+                                "$eq" : "41098650"
+                        }
+                },
+                "winningPlan" : {
+                        "stage" : "PROJECTION",
+                        "transformBy" : {
+                                "_id" : 0,
+                                "borough" : 1
+                        },
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "keyPattern" : {
+                                        "restaurant_id" : 1,
+                                        "borough" : 1
+                                },
+                                "indexName" : "restaurant_id_1_borough_1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "restaurant_id" : [ ],
+                                        "borough" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "restaurant_id" : [
+                                                "[\"41098650\", \"41098650\"]"
+                                        ],
+                                        "borough" : [
+                                                "[MinKey, MaxKey]"
+                                        ]
+                                }
+                        }
+                },
+                "rejectedPlans" : [ ]
+        },
+        "executionStats" : {
+                "executionSuccess" : true,
+                "nReturned" : 1,
+                "executionTimeMillis" : 0,
+                "totalKeysExamined" : 1,
+                "totalDocsExamined" : 0,
+                "executionStages" : {
+                        "stage" : "PROJECTION",
+                        "nReturned" : 1,
+                        "executionTimeMillisEstimate" : 0,
+                        "works" : 2,
+                        "advanced" : 1,
+                        "needTime" : 0,
+                        "needYield" : 0,
+                        "saveState" : 0,
+                        "restoreState" : 0,
+                        "isEOF" : 1,
+                        "invalidates" : 0,
+                        "transformBy" : {
+                                "_id" : 0,
+                                "borough" : 1
+                        },
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "nReturned" : 1,
+                                "executionTimeMillisEstimate" : 0,
+                                "works" : 2,
+                                "advanced" : 1,
+                                "needTime" : 0,
+                                "needYield" : 0,
+                                "saveState" : 0,
+                                "restoreState" : 0,
+                                "isEOF" : 1,
+                                "invalidates" : 0,
+                                "keyPattern" : {
+                                        "restaurant_id" : 1,
+                                        "borough" : 1
+                                },
+                                "indexName" : "restaurant_id_1_borough_1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "restaurant_id" : [ ],
+                                        "borough" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "restaurant_id" : [
+                                                "[\"41098650\", \"41098650\"]"
+                                        ],
+                                        "borough" : [
+                                                "[MinKey, MaxKey]"
+                                        ]
+                                },
+                                "keysExamined" : 1,
+                                "seeks" : 1,
+                                "dupsTested" : 0,
+                                "dupsDropped" : 0,
+                                "seenInvalidated" : 0
+                        }
+                }
+        },
+        "serverInfo" : {
+                "host" : "DESKTOP-J7U4URB",
+                "port" : 27017,
+                "version" : "3.6.2",
+                "gitVersion" : "489d177dbd0f0420a8ca04d39fd78d0a2c539420"
+        },
+        "ok" : 1
+}
+4.4 db.restaurants.createIndex({cuisine: 1}, {partialFilterExpression: {borough: 'Staten Island'}})
+
+db.restaurants.find({borough: "Staten Island", cuisine: "American"}).explain()
+
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "frontcamp.restaurants",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "$and" : [
+                                {
+                                        "borough" : {
+                                                "$eq" : "Staten Island"
+                                        }
+                                },
+                                {
+                                        "cuisine" : {
+                                                "$eq" : "American"
+                                        }
+                                }
+                        ]
+                },
+                "winningPlan" : {
+                        "stage" : "FETCH",
+                        "filter" : {
+                                "borough" : {
+                                        "$eq" : "Staten Island"
+                                }
+                        },
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "keyPattern" : {
+                                        "cuisine" : 1
+                                },
+                                "indexName" : "cuisine_1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "cuisine" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : true,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "cuisine" : [
+                                                "[\"American\", \"American\"]"
+                                        ]
+                                }
+                        }
+                },
+                "rejectedPlans" : [ ]
+        },
+        "serverInfo" : {
+                "host" : "DESKTOP-J7U4URB",
+                "port" : 27017,
+                "version" : "3.6.2",
+                "gitVersion" : "489d177dbd0f0420a8ca04d39fd78d0a2c539420"
+        },
+        "ok" : 1
+}
+
+db.restaurants.find({borough: "Staten Island", name: "Bagel Land"}).explain()
+
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "frontcamp.restaurants",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "$and" : [
+                                {
+                                        "borough" : {
+                                                "$eq" : "Staten Island"
+                                        }
+                                },
+                                {
+                                        "name" : {
+                                                "$eq" : "Bagel Land"
+                                        }
+                                }
+                        ]
+                },
+                "winningPlan" : {
+                        "stage" : "COLLSCAN",
+                        "filter" : {
+                                "$and" : [
+                                        {
+                                                "borough" : {
+                                                        "$eq" : "Staten Island"
+                                                }
+                                        },
+                                        {
+                                                "name" : {
+                                                        "$eq" : "Bagel Land"
+                                                }
+                                        }
+                                ]
+                        },
+                        "direction" : "forward"
+                },
+                "rejectedPlans" : [ ]
+        },
+        "serverInfo" : {
+                "host" : "DESKTOP-J7U4URB",
+                "port" : 27017,
+                "version" : "3.6.2",
+                "gitVersion" : "489d177dbd0f0420a8ca04d39fd78d0a2c539420"
+        },
+        "ok" : 1
+}
+
+db.restaurants.find({borough: "Queens", cuisine: "Pizza"}).explain()
+
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "frontcamp.restaurants",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "$and" : [
+                                {
+                                        "borough" : {
+                                                "$eq" : "Queens"
+                                        }
+                                },
+                                {
+                                        "cuisine" : {
+                                                "$eq" : "Pizza"
+                                        }
+                                }
+                        ]
+                },
+                "winningPlan" : {
+                        "stage" : "COLLSCAN",
+                        "filter" : {
+                                "$and" : [
+                                        {
+                                                "borough" : {
+                                                        "$eq" : "Queens"
+                                                }
+                                        },
+                                        {
+                                                "cuisine" : {
+                                                        "$eq" : "Pizza"
+                                                }
+                                        }
+                                ]
+                        },
+                        "direction" : "forward"
+                },
+                "rejectedPlans" : [ ]
+        },
+        "serverInfo" : {
+                "host" : "DESKTOP-J7U4URB",
+                "port" : 27017,
+                "version" : "3.6.2",
+                "gitVersion" : "489d177dbd0f0420a8ca04d39fd78d0a2c539420"
+        },
+        "ok" : 1
+}
+
+4.5 db.restaurants.createIndex({'grades.8.score': 1, name: 1})
+
+db.restaurants.find({"grades.8.score": {$lt: 7}}, {name: 1, _id: 0}).explain("executionStats")
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "frontcamp.restaurants",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "grades.8.score" : {
+                                "$lt" : 7
+                        }
+                },
+                "winningPlan" : {
+                        "stage" : "PROJECTION",
+                        "transformBy" : {
+                                "name" : 1,
+                                "_id" : 0
+                        },
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "keyPattern" : {
+                                        "grades.8.score" : 1,
+                                        "name" : 1
+                                },
+                                "indexName" : "grades.8.score_1_name_1",
+                                "isMultiKey" : true,
+                                "multiKeyPaths" : {
+                                        "grades.8.score" : [
+                                                "grades"
+                                        ],
+                                        "name" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "grades.8.score" : [
+                                                "[-inf.0, 7.0)"
+                                        ],
+                                        "name" : [
+                                                "[MinKey, MaxKey]"
+                                        ]
+                                }
+                        }
+                },
+                "rejectedPlans" : [ ]
+        },
+        "executionStats" : {
+                "executionSuccess" : true,
+                "nReturned" : 2,
+                "executionTimeMillis" : 0,
+                "totalKeysExamined" : 2,
+                "totalDocsExamined" : 0,
+                "executionStages" : {
+                        "stage" : "PROJECTION",
+                        "nReturned" : 2,
+                        "executionTimeMillisEstimate" : 0,
+                        "works" : 3,
+                        "advanced" : 2,
+                        "needTime" : 0,
+                        "needYield" : 0,
+                        "saveState" : 0,
+                        "restoreState" : 0,
+                        "isEOF" : 1,
+                        "invalidates" : 0,
+                        "transformBy" : {
+                                "name" : 1,
+                                "_id" : 0
+                        },
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "nReturned" : 2,
+                                "executionTimeMillisEstimate" : 0,
+                                "works" : 3,
+                                "advanced" : 2,
+                                "needTime" : 0,
+                                "needYield" : 0,
+                                "saveState" : 0,
+                                "restoreState" : 0,
+                                "isEOF" : 1,
+                                "invalidates" : 0,
+                                "keyPattern" : {
+                                        "grades.8.score" : 1,
+                                        "name" : 1
+                                },
+                                "indexName" : "grades.8.score_1_name_1",
+                                "isMultiKey" : true,
+                                "multiKeyPaths" : {
+                                        "grades.8.score" : [
+                                                "grades"
+                                        ],
+                                        "name" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "grades.8.score" : [
+                                                "[-inf.0, 7.0)"
+                                        ],
+                                        "name" : [
+                                                "[MinKey, MaxKey]"
+                                        ]
+                                },
+                                "keysExamined" : 2,
+                                "seeks" : 1,
+                                "dupsTested" : 2,
+                                "dupsDropped" : 0,
+                                "seenInvalidated" : 0
+                        }
+                }
+        },
+        "serverInfo" : {
+                "host" : "DESKTOP-J7U4URB",
+                "port" : 27017,
+                "version" : "3.6.2",
+                "gitVersion" : "489d177dbd0f0420a8ca04d39fd78d0a2c539420"
+        },
+        "ok" : 1
+}
